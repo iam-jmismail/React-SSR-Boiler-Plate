@@ -1,16 +1,17 @@
+require('dotenv').config();
 import 'babel-polyfill';
 import express from 'express';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import fs from 'fs';
-
+import mongoose from 'mongoose';
 
 // App Component 
 import App from './src/App';
 
 const app = express();
-const port = 4001;
+const port = process.env.PORT;
 
 // Middlewares 
 app.use(express.json())
@@ -29,8 +30,6 @@ app.get('*', (req, res) => {
         </StaticRouter>
     )
 
-    console.log('Requested URL ', req.url);
-
     fs.readFile('./index.html', 'utf-8', (err, data) => {
 
         if (err) {
@@ -38,10 +37,20 @@ app.get('*', (req, res) => {
             res.status(500).send('Oops, better luck next time!');
         }
 
-        const html = data.replace("<div id='root'>", "<div id='root'>" + content + "</div>")
+        const html = data.replace("<div id='root'>", "<div id='root'>" + content.toString() + "</div>")
         res.send(html);
     })
 
 })
+
+// Connect to Database 
+mongoose.connect(process.env.mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: true
+},
+    () => console.log('Connected to MongoDB successfully')
+);
+
 
 app.listen(port, () => { console.log(`Server running on PORT : ${port}`) })
