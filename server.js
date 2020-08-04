@@ -40,8 +40,8 @@ app.get('*', (req, res) => {
         const html = data.replace("<div id='root'>", "<div id='root'>" + content.toString() + "</div>")
         res.send(html);
     })
-
 })
+
 
 // Connect to Database 
 mongoose.connect(process.env.mongoURI, {

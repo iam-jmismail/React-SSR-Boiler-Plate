@@ -1,5 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import { Switch, Route } from 'react-router'
+import { Provider } from 'react-redux'
+
+// Redux 
+import store from './store';
 
 // Main Route File  
 import routes from './routes/index';
@@ -13,10 +17,12 @@ export class App extends Component {
         const routeComponents = routes.map(({ path, component }, key) => <Route exact path={path} component={component} key={key} />);
         return (
             <>
-                <Navbar />
-                <Switch>
-                    {routeComponents}
-                </Switch>
+                <Provider store={store}>
+                    <Navbar />
+                    <Switch>
+                        {routeComponents}
+                    </Switch>
+                </Provider>
             </>
         )
     }
