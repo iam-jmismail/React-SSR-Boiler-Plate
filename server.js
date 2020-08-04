@@ -6,15 +6,29 @@ import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import fs from 'fs';
 import mongoose from 'mongoose';
+import { graphql } from 'graphql';
+import { graphqlHTTP } from 'express-graphql';
 
 // App Component 
 import App from './src/App';
+
+// Schema 
+import schema from './src/data/schema';
 
 const app = express();
 const port = process.env.PORT;
 
 // Middlewares 
 app.use(express.json())
+
+// API Middleware 
+app.use(
+    '/graphql',
+    graphqlHTTP({
+        schema,
+        graphiql: true,
+    }),
+);
 
 // Static Folder 
 app.use(express.static('build/public'));
