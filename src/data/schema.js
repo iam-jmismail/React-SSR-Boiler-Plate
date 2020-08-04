@@ -3,7 +3,10 @@ import {
     GraphQLObjectType as ObjectType,
 } from 'graphql';
 
+// Queries 
 import me from './queries/me';
+
+// Mutations
 
 const schema = new Schema({
     query: new ObjectType({
