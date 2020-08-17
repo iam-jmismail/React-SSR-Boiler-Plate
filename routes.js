@@ -123,9 +123,11 @@ router.post(
 
 // EndPoint /auth/user - GET
 router.get("/user", auth, (req, res) => {
-  User.findById(req.user.id).then((user) => {
-    res.send(user);
-  });
+  User.findById(req.user.id)
+    .select("-password")
+    .then((user) => {
+      res.send(user);
+    });
 });
 
 module.exports = router;

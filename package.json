@@ -21,6 +21,7 @@
     "babel-loader": "^8.1.0",
     "babel-polyfill": "^6.26.0",
     "bcrypt": "^5.0.0",
+    "browser-cookies": "^1.2.0",
     "css-loader": "^4.0.0",
     "dotenv": "^8.2.0",
     "eslint": "^7.6.0",

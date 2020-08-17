@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { login } from "../../actions/AuthActions";
+// Actions
+import { register } from "../../actions/AuthActions";
 
-function Login(props) {
+function Register(props) {
   const dispatch = useDispatch();
+
   const state = useSelector((state) => {
     return {
       isAuthenticated: state.auth.isAuthenticated,
@@ -19,11 +21,9 @@ function Login(props) {
   }, [state.errors]);
 
   const [errors, setErrors] = useState([]);
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    error: null,
   });
 
   const onChange = (value, name) => {
@@ -35,7 +35,7 @@ function Login(props) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(login({ ...formData }));
+    dispatch(register({ ...formData }));
   };
 
   if (state && state.isAuthenticated) {
@@ -53,8 +53,6 @@ function Login(props) {
                 <div className='container'>
                   <div className='row'>
                     <div className='col-md-9 col-lg-8 mx-auto'>
-                      <h3 className='login-heading mb-4'>Login </h3>
-
                       {errors &&
                         errors.length > 0 &&
                         errors.map((error, index) => (
@@ -63,6 +61,7 @@ function Login(props) {
                           </div>
                         ))}
 
+                      <h3 className='login-heading mb-4'>Create account </h3>
                       <form method='POST' onSubmit={onSubmit}>
                         <div className='form-label-group'>
                           <input
@@ -71,7 +70,6 @@ function Login(props) {
                             className='form-control'
                             placeholder='Email address'
                             onChange={(e) => onChange(e.target.value, "email")}
-                            required
                             autoFocus
                           />
                           <label htmlFor='inputEmail'>Email address</label>
@@ -86,7 +84,6 @@ function Login(props) {
                             onChange={(e) =>
                               onChange(e.target.value, "password")
                             }
-                            required
                           />
                           <label htmlFor='inputPassword'>Password</label>
                         </div>
@@ -108,7 +105,7 @@ function Login(props) {
                           className='btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2'
                           type='submit'
                         >
-                          Sign in
+                          Sign Up
                         </button>
                         <div className='text-center'>
                           <a className='small' href='#'>
@@ -128,4 +125,4 @@ function Login(props) {
   );
 }
 
-export default Login;
+export default Register;

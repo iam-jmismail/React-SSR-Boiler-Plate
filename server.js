@@ -21,7 +21,7 @@ const port = process.env.PORT;
 // Middlewares
 app.use(express.json());
 
-// Authentiation
+// Authentiation Routes
 app.use("/auth", require("./routes"));
 
 // API Middleware
