@@ -1,12 +1,19 @@
-import Home from '../components/Home/Home';
+// Routes Files
+import auth from "./auth";
+import Home from "../components/Home/Home";
+import NotFound from "../components/NotFound";
 
-// Routes Files 
-import tests from './test';
-
-const routes = [{
-    path: '/',
+const routes = [
+  {
+    path: "/",
     component: Home,
-}, ...tests];
-
+    protectedRoute: false,
+  },
+  ...auth,
+  {
+    component: NotFound,
+    protectedRoute: false,
+  },
+];
 
 export default routes;
