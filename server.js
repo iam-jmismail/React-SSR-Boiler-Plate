@@ -1,6 +1,6 @@
 require("dotenv").config();
 import "babel-polyfill";
-import express from "express";
+import express, { response } from "express";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { StaticRouter } from "react-router";
@@ -13,7 +13,8 @@ import { graphqlHTTP } from "express-graphql";
 import App from "./src/App";
 
 // Schema
-import schema from "./src/data/schema";
+import schema from "./src/graphql/schema";
+import { request } from "http";
 
 const app = express();
 const port = process.env.PORT;
@@ -25,12 +26,17 @@ app.use(express.json());
 app.use("/auth", require("./routes"));
 
 // API Middleware
+
 app.use(
   "/graphql",
-  graphqlHTTP({
+  graphqlHTTP(async (request, response) => ({
     schema,
     graphiql: true,
-  })
+    rootValue: {
+      request,
+      response,
+    },
+  }))
 );
 
 // Static Folder

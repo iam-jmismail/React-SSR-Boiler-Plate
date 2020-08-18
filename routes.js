@@ -8,7 +8,7 @@ const router = express.Router();
 const auth = require("./middlewares/auth");
 
 // User Model
-const User = require("./src/data/models/User");
+const User = require("./src/graphql/models/User");
 
 // EndPoint - auth/register
 // Req - POST
