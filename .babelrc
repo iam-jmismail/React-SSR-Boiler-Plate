@@ -4,5 +4,8 @@
         [
             "@babel/preset-env"
         ]
+    ],
+    "plugins": [
+        "graphql-tag"
     ]
 }

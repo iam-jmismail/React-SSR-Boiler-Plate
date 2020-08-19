@@ -17,3 +17,13 @@ const getPosts = {
 };
 
 export default getPosts;
+
+
+/*
+query {
+  getPosts {
+    title
+    content
+  }
+}
+*/

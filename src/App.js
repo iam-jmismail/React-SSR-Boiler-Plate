@@ -15,6 +15,7 @@ import Navbar from "./components/Navbar/Navbar";
 // Load Users
 import { loadUser } from "./actions/AuthActions";
 
+
 export class App extends Component {
   componentDidMount() {
     store.dispatch(loadUser());
@@ -26,8 +27,8 @@ export class App extends Component {
         return !protectedRoute ? (
           <Route exact path={path} component={component} key={key} />
         ) : (
-          <ProtectedRoute />
-        );
+            <ProtectedRoute />
+          );
       }
     );
     return (

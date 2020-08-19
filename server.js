@@ -6,7 +6,11 @@ import ReactDOMServer from "react-dom/server";
 import { StaticRouter } from "react-router";
 import fs from "fs";
 import mongoose from "mongoose";
-import { graphql } from "graphql";
+
+import fetch from "cross-fetch";
+
+import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+
 import { graphqlHTTP } from "express-graphql";
 
 // App Component
@@ -46,9 +50,24 @@ app.use(express.static("build/public"));
 app.get("*", (req, res) => {
   const context = {};
 
+  const client = new ApolloClient({
+    ssrMode: true,
+    link: createHttpLink({
+      uri: 'http://localhost:4000/graphql',
+      fetch,
+      credentials: 'same-origin',
+      headers: {
+        cookie: req.header('Cookie'),
+      },
+    }),
+    cache: new InMemoryCache(),
+  });
+
   const content = ReactDOMServer.renderToString(
     <StaticRouter location={req.url} context={context}>
-      <App />
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
     </StaticRouter>
   );
 
